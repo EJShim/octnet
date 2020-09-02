@@ -76,7 +76,11 @@ set(OCTREE_GPU_SRCS
   src/volumetric_upsampling.cu
 )
 
-cuda_add_library(octnet_core_gpu SHARED ${OCTREE_GPU_SRCS})
+if(MSVC)
+  cuda_add_library(octnet_core_gpu STATIC ${OCTREE_GPU_SRCS})
+else(MSVC)
+  cuda_add_library(octnet_core_gpu SHARED ${OCTREE_GPU_SRCS})
+endif(MSVC)
 target_link_libraries(octnet_core_gpu ${OctNetCore_LIBRARY} ${CUDA_LIBRARIES})
 
 # performance tests
